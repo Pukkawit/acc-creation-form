@@ -122,7 +122,6 @@
         position: absolute;
         right: 0;
         top: 24px;
-
         cursor: pointer;
       }
       #lock1,
@@ -170,26 +169,21 @@
         margin-bottom: 15px;
         position: relative;
       }
-      .pwd-ref a {
-        color: #8491a3;
+      .pwd-ref p {
+        color: #518ef8;
         margin-left: 5px;
-        outline: none;
-      }
-      .pwd-ref a:focus {
-        color: rgb(74, 123, 214);
-        padding: 5px;
-        border: 1px inset #9c9b9b;
-        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
       }
       .pass-requirement {
         font-size: 0.6rem;
-        line-height: 1.2;
+        line-height: 1.4;
         position: absolute;
         bottom: 17px;
-        right: 22%;
+        right: 21%;
         background-color: #213b58;
         color: #fff;
-        padding: 5px;
+        padding: 10px;
         border-radius: 5px;
         display: none;
       }
@@ -229,7 +223,7 @@
     <div class="login-page">
       <h4>Sign up with</h4>
       <button class="btn google-btn">
-        <img class="google-icon" src="search.png" />Google
+        <img class="google-icon" src="./google-icon.png" />Google
       </button>
       <span class="divider"></span>
       <h4>Create New Account</h4>
@@ -271,8 +265,8 @@
               <li>Not less than 8 characters</li>
             </ul>
           </div>
-          <i class="fa-solid fa-circle-exclamation"></i
-          ><a href="#" id="pass-requirement-link">Password requirements</a>
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <p id="pass-requirement-link">Password requirements</p>
         </div>
         <div class="password-section">
           <div class="form-group">
@@ -296,6 +290,7 @@
       </footer>
     </div>
     <script>
+      // FUNCTION TO HIDE AND SHOW PASSWORD ===============
       function hideShowPaswrd() {
         let pass = document.getElementById("myPass");
         let open = document.getElementById("open1");
@@ -325,6 +320,10 @@
         }
       }
 
+      // FUNCTION TO CHECK AND VALIDATE PASSWORD =========
+
+      // Select criteria for the password
+
       function checkPassword(password) {
         const hasNumber = /\d/.test(password);
         const hasSpecialChar = /[!@#$%^&*]/.test(password);
@@ -341,12 +340,19 @@
         );
       }
 
+      // Target the elements (password input & error message)
+
       const passwordInput = document.getElementById("myPass");
       const passError = document.getElementById("error-mgs");
 
+      // Function to validate the password when the user leaves the input field
+
       passwordInput.addEventListener("blur", function () {
         const password = passwordInput.value;
-        if (checkPassword(password)) {
+        if (!password) {
+          passError.textContent = "Please enter password";
+          passError.style.color = "red";
+        } else if (checkPassword(password)) {
           passError.textContent = "Strong Password";
           passError.style.color = "green";
         } else {
@@ -356,31 +362,36 @@
         }
       });
 
+      // FUNCTION TO SHOW TOOLTIP ===================
       const elementWithTooltip = document.getElementById(
         "pass-requirement-link"
       );
       const tooltip = document.getElementById("pass-requirement");
 
-      // Show tooltip when mouse enters the element
-      elementWithTooltip.addEventListener("mouseenter", function () {
-        const password = passwordInput.value;
+      // Function to show the tooltip
+      function showTooltip() {
+        tooltip.style.display = "block";
+      }
 
-        if (!checkPassword(password)) {
-          tooltip.style.display = "block";
-          console.log(tooltip);
-        } else {
-          // Hide tooltip when mouse leaves the element
-          elementWithTooltip.addEventListener("mouseleave", function () {
-            tooltip.style.display = "none";
-          });
-        }
+      // Function to hide the tooltip
+      function hideTooltip() {
+        tooltip.style.display = "none";
+      }
+
+      // Show tooltip when element is clicked
+      elementWithTooltip.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent the click event from bubbling up to the document
+        showTooltip();
       });
 
-      // Position tooltip relative to the mouse cursor
-      // elementWithTooltip.addEventListener("mousemove", function (event) {
-      //   tooltip.style.left = event.pageX + 10 + "px";
-      //   tooltip.style.top = event.pageY + 10 + "px";
-      // });
+      // Hide tooltip when user clicks outside the element or the tooltip
+      document.addEventListener("click", function (event) {
+        const isClickInsideElement = elementWithTooltip.contains(event.target);
+        // const isClickInsideTooltip = tooltip.contains(event.target);
+        if (!isClickInsideElement) {
+          hideTooltip();
+        }
+      });
     </script>
   </body>
 </html>
