@@ -16,15 +16,12 @@
         padding: 0;
         margin: 0;
         box-sizing: border-box;
-        font-family: "Open Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        font-family: 'Open Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
           sans-serif;
       }
       body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         font-size: 16px;
-        padding: 20px 0;
+        position: relative;
       }
       .login-page {
         width: 300px;
@@ -33,6 +30,7 @@
         padding: 20px;
         font-family: Arial, Helvetica, sans-serif;
         border: 2px solid #cfcece;
+        margin: 40px auto;
       }
       h4 {
         font-weight: bolder;
@@ -94,8 +92,8 @@
         font-size: 0.9rem;
         margin-bottom: 5px;
       }
-      input[type="text"],
-      [type="email"] {
+      input[type='text'],
+      [type='email'] {
         border: 1px solid #cfcece;
         height: 30px;
         width: 100%;
@@ -103,7 +101,7 @@
         padding: 10px;
         margin-bottom: 20px;
       }
-      input[type="password"] {
+      input[type='password'] {
         border: 1px solid #cfcece;
         height: 30px;
         width: 100%;
@@ -165,6 +163,13 @@
         font-size: 0.7em;
         margin-bottom: 10px;
       }
+      #error-mgs2 {
+        color: red;
+        text-align: right;
+        font-size: 0.7em;
+        margin-bottom: 10px;
+        text-align: center;
+      }
       .pwd-ref {
         font-size: 0.8rem;
         color: #8491a3;
@@ -212,12 +217,26 @@
         padding: 20px;
         width: 75%;
       }
-      p[class="footer"] {
+      p[class='footer'] {
         width: 120px;
         margin: 0 auto;
       }
-      p[class="footer"] a {
+      p[class='footer'] a {
         text-decoration: none;
+      }
+      footer {
+        padding: 20px;
+        height: 60px;
+        width: 100%;
+        background-color: #242c35;
+
+        color: #fff;
+      }
+      footer p {
+        color: #fff;
+        text-align: center;
+        text-align: center;
+        font-size: 0.8rem;
       }
     </style>
   </head>
@@ -275,6 +294,9 @@
             <label for="">Confirm password</label>
             <input type="password" name="" id="myPass2" class="myPass2" />
           </div>
+          <div>
+            <p id="error-mgs2"></p>
+          </div>
           <div onclick="hideShowPaswrd2()" class="hide-show-2">
             <div id="open2"><i class="fa-regular fa-eye"></i></div>
             <div id="lock2"><i class="fa-regular fa-eye-slash"></i></div>
@@ -284,41 +306,52 @@
       <div class="center-align">
         <button class="btn btn-create-acc">Create account</button>
       </div>
-      <footer class="login-footer">
+      <div class="login-footer">
         <p class="footer">
           Already have an account?
           <span><a href="" class="green-text">Log In</a></span>
         </p>
-      </footer>
+      </div>
     </div>
+    <footer>
+      <p>
+        Copyright @Witty Umosung 2023 -
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+      </p>
+    </footer>
     <script>
       // FUNCTION TO HIDE AND SHOW PASSWORD ===============
       function hideShowPaswrd() {
-        let pass = document.getElementById("myPass");
-        let open = document.getElementById("open1");
-        let close = document.getElementById("lock1");
-        if (pass.type === "password") {
-          pass.type = "text";
-          open.style.display = "flex";
-          close.style.display = "none";
+        let pass = document.getElementById('myPass');
+        let open = document.getElementById('open1');
+        let close = document.getElementById('lock1');
+        if (pass.type === 'password') {
+          pass.type = 'text';
+          pass.style.marginBottom = '5px';
+          open.style.display = 'flex';
+          open.style.paddingTop = '0';
+          close.style.display = 'none';
         } else {
-          pass.type = "password";
-          open.style.display = "none";
-          close.style.display = "flex";
+          pass.type = 'password';
+          open.style.display = 'none';
+          close.style.display = 'flex';
         }
       }
       function hideShowPaswrd2() {
-        let pass = document.getElementById("myPass2");
-        let open = document.getElementById("open2");
-        let close = document.getElementById("lock2");
-        if (pass.type === "password") {
-          pass.type = "text";
-          open.style.display = "flex";
-          close.style.display = "none";
+        let pass = document.getElementById('myPass2');
+        let open = document.getElementById('open2');
+        let close = document.getElementById('lock2');
+        if (pass.type === 'password') {
+          pass.type = 'text';
+          pass.style.marginBottom = '5px';
+          open.style.display = 'flex';
+          close.style.display = 'none';
         } else {
-          pass.type = "password";
-          open.style.display = "none";
-          close.style.display = "flex";
+          pass.type = 'password';
+          open.style.display = 'none';
+          close.style.display = 'flex';
         }
       }
 
@@ -344,50 +377,66 @@
 
       // Target the elements (password input & error message)
 
-      const passwordInput = document.getElementById("myPass");
-      const passError = document.getElementById("error-mgs");
+      const passwordInput = document.getElementById('myPass');
+      const passError = document.getElementById('error-mgs');
 
       // Function to validate the password when the user leaves the input field
 
-      passwordInput.addEventListener("blur", function () {
+      passwordInput.addEventListener('blur', function () {
         const password = passwordInput.value;
         if (!password) {
-          passError.textContent = "Please enter password";
-          passError.style.color = "red";
+          passError.textContent = 'Please enter password';
+          passError.style.color = 'red';
         } else if (checkPassword(password)) {
-          passError.textContent = "Strong Password";
-          passError.style.color = "green";
+          passError.textContent = 'Strong Password';
+          passError.style.color = 'green';
         } else {
           passError.textContent =
-            "Weak password - Please refer password requirements";
-          passError.style.color = "red";
+            'Weak password - Please refer password requirements';
+          passError.style.color = 'red';
+        }
+      });
+
+      // COMPARE password AND confirm password
+
+      const confirmPasswrd = document.getElementById('myPass2');
+      const passError2 = document.getElementById('error-mgs2');
+      confirmPasswrd.addEventListener('blur', function () {
+        const password = passwordInput.value;
+        const conPass = confirmPasswrd.value;
+
+        if (conPass !== password) {
+          passError2.textContent =
+            'Please ensure to type password correctly to confirm';
+        } else if (conPass == password) {
+          passError2.textContent = '';
         }
       });
 
       // FUNCTION TO SHOW TOOLTIP ===================
       const elementWithTooltip = document.getElementById(
-        "pass-requirement-link"
+        'pass-requirement-link'
       );
-      const tooltip = document.getElementById("pass-requirement");
+      const tooltip = document.getElementById('pass-requirement');
 
       // Function to show the tooltip
       function showTooltip() {
-        tooltip.style.display = "block";
+        tooltip.style.display = 'block';
       }
 
       // Function to hide the tooltip
       function hideTooltip() {
-        tooltip.style.display = "none";
+        tooltip.style.display = 'none';
       }
 
       // Show tooltip when element is clicked
-      elementWithTooltip.addEventListener("click", function (event) {
+      elementWithTooltip.addEventListener('click', function (event) {
         event.stopPropagation(); // Prevent the click event from bubbling up to the document
         showTooltip();
       });
 
       // Hide tooltip when user clicks outside the element or the tooltip
-      document.addEventListener("click", function (event) {
+      document.addEventListener('click', function (event) {
         const isClickInsideElement = elementWithTooltip.contains(event.target);
         // const isClickInsideTooltip = tooltip.contains(event.target);
         if (!isClickInsideElement) {
